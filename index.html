@@ -35,27 +35,74 @@
   }
 
   /* ── TELEGRAM BUTTON (top-right) ──────────────── */
-  .tg-btn {
+  .tg-wrap {
     position: absolute;
-    top: 50px;
-    right: 20px;
-    width: 46px; height: 46px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(8px);
+    top: 46px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+  }
+
+  .tg-btn {
+    width: 52px; height: 52px;
+    background: #29a8e8;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    border: 1px solid rgba(255,255,255,0.25);
-    z-index: 10;
+    border: 3px solid rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 0 rgba(41,168,232,0.7);
+    animation: tg-pulse 2s ease-out infinite;
+    transition: transform 0.15s, background 0.2s;
+    position: relative;
   }
+
   .tg-btn:hover, .tg-btn:active {
-    background: rgba(255,255,255,0.3);
-    transform: scale(1.08);
+    background: #1a96d4;
+    transform: scale(1.1);
+    animation: none;
   }
+
   .tg-btn svg { color: #fff; }
+
+  /* Ping ring */
+  .tg-btn::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(41,168,232,0.5);
+    animation: tg-ring 2s ease-out infinite;
+  }
+
+  @keyframes tg-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(41,168,232,0.7); }
+    60%  { box-shadow: 0 0 0 10px rgba(41,168,232,0); }
+    100% { box-shadow: 0 0 0 0 rgba(41,168,232,0); }
+  }
+
+  @keyframes tg-ring {
+    0%   { transform: scale(1); opacity: 1; }
+    70%  { transform: scale(1.4); opacity: 0; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
+  .tg-label {
+    background: rgba(255,255,255,0.95);
+    color: #1a96d4;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
 
   /* ── HERO ─────────────────────────────────────── */
   .hero {
@@ -251,26 +298,74 @@
     cursor: pointer;
   }
 
-  /* spinner */
-  .spinner {
-    width: 30px; height: 30px;
-    border: 3px solid rgba(255,255,255,0.2);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
+  /* ── SKELETON LOADER ─────────────────────────────── */
+  .skeleton-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 18px;
+    margin-bottom: 10px;
+    padding: 16px 18px;
+    overflow: hidden;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .skel {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.12) 25%,
+      rgba(255,255,255,0.28) 50%,
+      rgba(255,255,255,0.12) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .skel-badge {
+    width: 62px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .skel-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skel-line {
+    height: 13px;
+    border-radius: 6px;
+  }
+
+  .skel-arrow {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <!-- Telegram button -->
-  <a class="tg-btn" href="https://t.me/+qkeG942fmqhkMmM1" target="_blank" rel="noopener noreferrer" title="Join Telegram Channel">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-    </svg>
-  </a>
+  <div class="tg-wrap">
+    <a class="tg-btn" href="https://t.me/+qkeG942fmqhkMmM1" target="_blank" rel="noopener noreferrer" title="Join Telegram Channel">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+      </svg>
+    </a>
+    <span class="tg-label">JOIN US</span>
+  </div>
 
   <!-- Hero -->
   <div class="hero">
@@ -407,7 +502,19 @@
   function renderState(type, msg) {
     countBar.textContent = '';
     if (type === 'loading') {
-      entriesList.innerHTML = `<div class="state-box"><div class="spinner"></div><div class="state-label" style="color:rgba(255,255,255,0.7);margin-top:12px">Loading…</div></div>`;
+      const widths = [
+        ['55%','80%'], ['70%','45%'], ['60%','90%'],
+        ['80%','55%'], ['50%','75%'], ['65%','60%']
+      ];
+      entriesList.innerHTML = widths.map(([w1, w2], i) => `
+        <div class="skeleton-card" style="animation-delay:${i * 0.06}s">
+          <div class="skel skel-badge"></div>
+          <div class="skel-lines">
+            <div class="skel skel-line" style="width:${w1}"></div>
+            <div class="skel skel-line" style="width:${w2}; opacity:0.6"></div>
+          </div>
+          <div class="skel skel-arrow"></div>
+        </div>`).join('');
     } else if (type === 'error') {
       entriesList.innerHTML = `<div class="state-box">
         <div class="state-icon">⚠️</div>
@@ -424,5 +531,6 @@
 
   fetchData();
 </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"499e684b7b1043878977050a0a606794","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
