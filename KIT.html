@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sphotoedit KIT</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: #1a0533;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* gradient matching the mockup */
+    background: linear-gradient(
+      160deg,
+      #6c3fc5 0%,
+      #c0478a 35%,
+      #e8613a 60%,
+      #e8a030 80%,
+      #c06bc0 100%
+    );
+  }
+
+  /* ── TELEGRAM BUTTON (top-right) ──────────────── */
+  .tg-btn {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 46px; height: 46px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: 1px solid rgba(255,255,255,0.25);
+    z-index: 10;
+  }
+  .tg-btn:hover, .tg-btn:active {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.08);
+  }
+  .tg-btn svg { color: #fff; }
+
+  /* ── HERO ─────────────────────────────────────── */
+  .hero {
+    padding: 54px 24px 28px;
+    color: #fff;
+  }
+
+  .hero-title {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    padding-right: 60px; /* avoid overlap with tg btn */
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 24px;
+  }
+
+  /* ── SEARCH BAR ───────────────────────────────── */
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    background: rgba(255,255,255,0.97);
+    border: none;
+    border-radius: 18px;
+    padding: 16px 46px 16px 50px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #222;
+    outline: none;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.18);
+    -webkit-appearance: none;
+    transition: box-shadow 0.25s;
+  }
+  .search-input:focus {
+    box-shadow: 0 8px 36px rgba(0,0,0,0.26), 0 0 0 2.5px rgba(255,255,255,0.6);
+  }
+  .search-input::placeholder { color: #aaa; font-weight: 400; }
+  .search-input::-webkit-search-cancel-button { display: none; }
+
+  .search-icon {
+    position: absolute;
+    left: 17px; top: 50%;
+    transform: translateY(-50%);
+    color: #a060c0;
+    pointer-events: none;
+    display: flex;
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    background: #e0d0f0;
+    border: none;
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    color: #888;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .clear-btn.visible { display: flex; }
+
+  /* ── CARDS AREA ───────────────────────────────── */
+  .cards-area {
+    flex: 1;
+    padding: 10px 14px 50px;
+  }
+
+  /* count row */
+  .meta-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 4px 6px;
+  }
+  .count-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.03em;
+  }
+
+  /* card */
+  .entry-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    margin-bottom: 10px;
+    padding: 16px 18px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    transition: transform 0.13s, box-shadow 0.13s;
+    animation: fadeUp 0.28s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .entry-card:hover, .entry-card:active {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* code badge — colored per entry (cycles through palette) */
+  .entry-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 62px;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 0.03em;
+  }
+
+  .entry-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .entry-arrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: #bbb;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .entry-card:hover .entry-arrow,
+  .entry-card:active .entry-arrow {
+    color: #a060c0;
+    transform: translateX(3px);
+  }
+
+  /* highlight */
+  mark {
+    background: rgba(180, 80, 200, 0.15);
+    color: #8030b0;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  /* ── STATES ───────────────────────────────────── */
+  .state-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    gap: 12px;
+  }
+  .state-icon { font-size: 40px; opacity: 0.6; }
+  .state-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+  .retry-btn {
+    margin-top: 4px;
+    background: rgba(255,255,255,0.9);
+    color: #7030a0;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 28px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  /* spinner */
+  .spinner {
+    width: 30px; height: 30px;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Telegram button -->
+  <a class="tg-btn" href="https://t.me/+qkeG942fmqhkMmM1" target="_blank" rel="noopener noreferrer" title="Join Telegram Channel">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </svg>
+  </a>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-title">Sphotoedit KIT</div>
+    <div class="hero-sub">Find Tools. Get Instant Links.</div>
+
+    <!-- Search bar -->
+    <div class="search-wrap">
+      <span class="search-icon">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+      </span>
+      <input class="search-input" id="searchInput" type="search"
+        placeholder="Search by title, code…"
+        autocomplete="off" spellcheck="false">
+      <button class="clear-btn" id="clearBtn">✕</button>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards-area">
+    <div class="meta-row">
+      <span class="count-label" id="countBar"></span>
+    </div>
+    <div id="entriesList"></div>
+  </div>
+
+</div>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbz7XuDQPEw5c__5noSJPCcON0fqAwyO03nJKzCxoPaVXGhSJKwIaUts2eO_NuIB1c9sWw/exec';
+
+  // Badge colour palette (cycles)
+  const BADGE_COLORS = [
+    '#7c4dca', '#c0478a', '#e0572a', '#2196a8',
+    '#4caf7d', '#e08020', '#5c6bc0', '#c0522a'
+  ];
+
+  let allEntries = [];
+  let query = '';
+
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn    = document.getElementById('clearBtn');
+  const entriesList = document.getElementById('entriesList');
+  const countBar    = document.getElementById('countBar');
+
+  searchInput.addEventListener('input', () => {
+    query = searchInput.value.trim();
+    clearBtn.classList.toggle('visible', query.length > 0);
+    renderEntries();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    query = '';
+    clearBtn.classList.remove('visible');
+    renderEntries();
+    searchInput.focus();
+  });
+
+  // ── Fetch ─────────────────────────────────────────────
+  async function fetchData() {
+    renderState('loading');
+    try {
+      const res  = await fetch(API_URL + '?_ts=' + Date.now(), { redirect: 'follow' });
+      const text = await res.text();
+      let json;
+      try { json = JSON.parse(text); }
+      catch(e) { renderState('error', 'Bad response: ' + text.slice(0,160)); return; }
+      if (json.error) { renderState('error', json.error); return; }
+
+      allEntries = (json.entries || []).reverse();
+      if (allEntries.length === 0) { renderState('empty'); return; }
+      renderEntries();
+    } catch(err) {
+      renderState('error', err.message);
+    }
+  }
+
+  // ── Helpers ───────────────────────────────────────────
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function hi(text, q) {
+    if (!q || !text) return esc(text);
+    const e  = esc(text);
+    const qe = esc(q).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    return e.replace(new RegExp('('+qe+')','gi'),'<mark>$1</mark>');
+  }
+
+  // ── Render ────────────────────────────────────────────
+  function renderEntries() {
+    const q = query.toLowerCase();
+    const filtered = q
+      ? allEntries.filter(e =>
+          (e.title||'').toLowerCase().includes(q) ||
+          (e.code||'').toLowerCase().includes(q) ||
+          (e.link||'').toLowerCase().includes(q)
+        )
+      : allEntries;
+
+    countBar.textContent = filtered.length
+      ? filtered.length + ' item' + (filtered.length === 1 ? '' : 's')
+      : '';
+
+    if (filtered.length === 0) {
+      entriesList.innerHTML = `<div class="state-box">
+        <div class="state-icon">🔍</div>
+        <div class="state-label">No results for <strong>"${esc(query)}"</strong></div>
+      </div>`;
+      return;
+    }
+
+    entriesList.innerHTML = filtered.map((e, i) => {
+      const color = BADGE_COLORS[i % BADGE_COLORS.length];
+      return `
+        <a class="entry-card"
+           href="${esc(e.link || '#')}"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="animation-delay:${Math.min(i * 0.04, 0.4)}s">
+          <span class="entry-code" style="background:${color}">${hi(e.code || '—', q)}</span>
+          <span class="entry-title">${hi(e.title || 'Untitled', q)}</span>
+          <span class="entry-arrow">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>`;
+    }).join('');
+  }
+
+  function renderState(type, msg) {
+    countBar.textContent = '';
+    if (type === 'loading') {
+      entriesList.innerHTML = `<div class="state-box"><div class="spinner"></div><div class="state-label" style="color:rgba(255,255,255,0.7);margin-top:12px">Loading…</div></div>`;
+    } else if (type === 'error') {
+      entriesList.innerHTML = `<div class="state-box">
+        <div class="state-icon">⚠️</div>
+        <div class="state-label">${esc(msg||'Something went wrong')}</div>
+        <button class="retry-btn" onclick="fetchData()">Retry</button>
+      </div>`;
+    } else if (type === 'empty') {
+      entriesList.innerHTML = `<div class="state-box">
+        <div class="state-icon">📭</div>
+        <div class="state-label">No entries found in sheet.</div>
+      </div>`;
+    }
+  }
+
+  fetchData();
+</script>
+</body>
+</html>
