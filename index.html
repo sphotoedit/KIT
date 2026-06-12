@@ -3,17 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Sphotoedit KIT · Direct Unlock</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<title>Sphotoedit KIT</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --blue:   #2F38B2;
+    --white:  #FFFFFF;
+    --dark:   #323232;
+    --yellow: #F5DF4E;
+    --black:  #0D0D0D;
+    --bg:     #F5F6FA;
+    --card:   #FFFFFF;
+    --muted:  #888;
+    --border: #E8E8F0;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
+    background: var(--bg);
     display: flex;
     justify-content: center;
-    background: #1a0533;
   }
 
   .wrap {
@@ -22,170 +34,228 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: var(--bg);
+  }
+
+  /* ── HERO COVER ─────────────────────────────────── */
+  .hero-cover {
     position: relative;
-    background: linear-gradient(
-      160deg,
-      #6c3fc5 0%,
-      #c0478a 35%,
-      #e8613a 60%,
-      #e8a030 80%,
-      #c06bc0 100%
-    );
-  }
-
-  .hero {
-    padding: 32px 14px 16px;
-    color: #fff;
-    text-align: center;
-  }
-
-  .hero-title {
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.5px;
-    margin-bottom: 2px;
-  }
-
-  .hero-sub {
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.85);
-    margin-bottom: 16px;
-    letter-spacing: 0.02em;
-  }
-
-  /* DUAL BANNER — split 50/50 */
-  .dual-banner {
+    background: var(--blue);
+    overflow: hidden;
     display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    animation: slideDownFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .banner-half {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.96);
-    border-radius: 16px;
-    padding: 7px 8px;
+    padding: 36px 22px 36px 22px;
+    gap: 20px;
     text-decoration: none;
-    color: #111;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    transition: transform 0.2s, box-shadow 0.2s;
-    min-height: 54px;
+    cursor: pointer;
+    transition: filter 0.2s;
   }
 
-  .banner-half:hover, .banner-half:active {
-    transform: scale(1.03);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-  }
-
-  .banner-half.tg {
-    border: 2px solid rgba(41, 168, 232, 0.7);
-    animation: glow-pulse-tg 2.5s infinite ease-in-out;
-  }
-
-  .banner-half.yt {
-    border: 2px solid rgba(255, 0, 0, 0.5);
-    animation: glow-pulse-yt 2.5s infinite ease-in-out 0.6s;
-  }
-
-  .banner-icon {
-    width: 26px;
-    height: 26px;
+  .hero-cover::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: rgba(245, 223, 78, 0.12);
     border-radius: 50%;
-    display: flex;
+    pointer-events: none;
+  }
+
+  .hero-cover::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -20px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-cover:hover { filter: brightness(1.07); }
+  .hero-cover:active { filter: brightness(0.95); }
+
+  .hero-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 18px;
+    object-fit: cover;
+    object-position: top center;
+    flex-shrink: 0;
+    border: 3px solid var(--yellow);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  .hero-text {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    display: block;
+  }
+
+  .hero-headline {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    color: #fff;
+    gap: 8px;
+    background: var(--yellow);
+    color: var(--black);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 18px;
+    border-radius: 40px;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s;
+  }
+
+  .hero-cta:active { transform: scale(0.96); }
+
+  .hero-cta-icon {
+    width: 16px; height: 16px;
     flex-shrink: 0;
   }
-  .banner-icon.tg { background: #2ea6da; }
-  .banner-icon.yt { background: #ff0000; }
 
-  .banner-label {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.01em;
-    text-align: center;
+  .hero-cover .accent-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--yellow);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ── COLLAB STRIP ────────────────────────────────── */
+  .collab-strip {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--yellow);
+    padding: 13px 18px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    text-decoration: none;
+    color: var(--black);
+    font-size: 12.5px;
+    font-weight: 600;
+    transition: filter 0.2s;
+  }
+
+  .collab-strip:hover { filter: brightness(0.96); }
+
+  .collab-strip svg:first-child {
+    color: var(--black);
+    flex-shrink: 0;
+  }
+
+  .collab-strip span {
+    flex: 1;
     line-height: 1.3;
   }
-  .banner-label.tg { color: #128ec9; }
-  .banner-label.yt { color: #cc0000; }
 
-  .banner-badge {
-    color: #fff;
-    font-size: 9px;
+  .collab-strip strong {
+    color: var(--black);
     font-weight: 800;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.05em;
-  }
-  .banner-badge.tg { background: #2ea6da; }
-  .banner-badge.yt { background: #ff0000; }
-
-  @keyframes slideDownFade {
-    from { opacity: 0; transform: translateY(-15px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes glow-pulse-tg {
-    0% { box-shadow: 0 0 0 0 rgba(41, 168, 232, 0.55); }
-    50% { box-shadow: 0 0 0 10px rgba(41, 168, 232, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(41, 168, 232, 0); }
+  .collab-arrow {
+    color: rgba(0,0,0,0.3);
+    flex-shrink: 0;
+    transition: color 0.15s, transform 0.15s;
   }
 
-  @keyframes glow-pulse-yt {
-    0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.45); }
-    50% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+  .collab-strip:hover .collab-arrow {
+    color: var(--black);
+    transform: translateX(3px);
+  }
+
+  /* ── SEARCH ZONE ─────────────────────────────────── */
+  .search-zone {
+    background: var(--white);
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .brand-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .brand-label::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 3px;
+    background: var(--yellow);
+    border-radius: 2px;
   }
 
   .search-wrap {
     position: relative;
-    width: 100%;
-    margin: 0 auto;
   }
 
   .search-input {
     width: 100%;
-    background: rgba(255,255,255,0.97);
-    border: none;
-    border-radius: 18px;
-    padding: 14px 44px 14px 46px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 40px 12px 42px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13.5px;
     font-weight: 500;
-    color: #222;
+    color: var(--dark);
     outline: none;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
-    transition: box-shadow 0.25s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
+
   .search-input:focus {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 0 0 2.5px rgba(255,255,255,0.6);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(47,56,178,0.1);
+    background: var(--white);
   }
+
   .search-input::placeholder { color: #aaa; font-weight: 400; }
   .search-input::-webkit-search-cancel-button { display: none; }
 
   .search-icon {
     position: absolute;
-    left: 16px; top: 50%;
+    left: 14px; top: 50%;
     transform: translateY(-50%);
-    color: #a060c0;
+    color: var(--blue);
     pointer-events: none;
     display: flex;
+    opacity: 0.7;
   }
 
   .clear-btn {
     position: absolute;
-    right: 14px; top: 50%;
+    right: 12px; top: 50%;
     transform: translateY(-50%);
-    background: #e0d0f0;
+    background: var(--border);
     border: none;
     border-radius: 50%;
     width: 22px; height: 22px;
@@ -195,72 +265,93 @@
     align-items: center;
     justify-content: center;
     font-size: 11px;
+    transition: background 0.15s;
   }
+  .clear-btn:hover { background: #ddd; }
   .clear-btn.visible { display: flex; }
 
+  /* ── CARDS AREA ──────────────────────────────────── */
   .cards-area {
     flex: 1;
-    padding: 6px 14px 20px;
+    padding: 12px 14px 24px;
   }
 
   .meta-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 6px 4px 8px;
+    padding: 4px 2px 10px;
   }
+
   .count-label {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.03em;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .entry-card {
     display: flex;
     align-items: center;
-    gap: 14px;
-    background: rgba(255,255,255,0.95);
-    border-radius: 18px;
-    margin-bottom: 10px;
-    padding: 16px 18px;
+    gap: 12px;
+    background: var(--card);
+    border-radius: 14px;
+    margin-bottom: 8px;
+    padding: 14px 16px;
     text-decoration: none;
     cursor: pointer;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-    transition: transform 0.13s, box-shadow 0.13s;
-    animation: fadeUp 0.28s ease both;
+    border: 1.5px solid var(--border);
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+    animation: fadeUp 0.24s ease both;
     position: relative;
     overflow: hidden;
   }
 
-  .entry-card:hover, .entry-card:active {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  .entry-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    border-radius: 0 3px 3px 0;
+    transition: background 0.15s;
   }
 
+  .entry-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 4px 20px rgba(47,56,178,0.1);
+    transform: translateY(-1px);
+  }
+
+  .entry-card:hover::before {
+    background: var(--blue);
+  }
+
+  .entry-card:active { transform: scale(0.99); }
+
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   .entry-code {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 10px;
+    padding: 5px 10px;
+    border-radius: 8px;
     white-space: nowrap;
     flex-shrink: 0;
-    min-width: 62px;
+    min-width: 58px;
     text-align: center;
     color: #fff;
     letter-spacing: 0.03em;
   }
 
   .entry-title {
-    font-size: 15px;
+    font-size: 13.5px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--dark);
     line-height: 1.35;
     flex: 1;
     text-align: left;
@@ -270,31 +361,34 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    color: #bbb;
+    color: var(--border);
     transition: color 0.2s, transform 0.2s;
   }
-  .entry-card:hover .entry-arrow,
-  .entry-card:active .entry-arrow {
-    color: #a060c0;
+
+  .entry-card:hover .entry-arrow {
+    color: var(--blue);
     transform: translateX(3px);
   }
 
   mark {
-    background: rgba(180, 80, 200, 0.15);
-    color: #8030b0;
+    background: var(--yellow);
+    color: var(--black);
     border-radius: 3px;
     padding: 0 2px;
   }
 
+  /* ── FOOTER ──────────────────────────────────────── */
   .credits-footer {
     text-align: center;
-    padding: 16px 24px 32px;
-    font-size: 11px;
+    padding: 14px 24px 28px;
+    font-size: 10px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.45);
-    letter-spacing: 0.04em;
+    color: #bbb;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
+  /* ── STATE BOXES ─────────────────────────────────── */
   .state-box {
     display: flex;
     flex-direction: column;
@@ -304,42 +398,44 @@
     text-align: center;
     gap: 12px;
   }
-  .state-icon { font-size: 40px; opacity: 0.6; }
+  .state-icon { font-size: 36px; opacity: 0.5; }
   .state-label {
-    font-size: 14px;
-    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    color: #999;
     line-height: 1.6;
   }
   .retry-btn {
     margin-top: 4px;
-    background: rgba(255,255,255,0.9);
-    color: #7030a0;
+    background: var(--blue);
+    color: white;
     border: none;
     border-radius: 30px;
     padding: 10px 28px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 13px;
     cursor: pointer;
+    transition: background 0.2s;
   }
+  .retry-btn:hover { background: #1e2590; }
 
+  /* ── SKELETON ────────────────────────────────────── */
   .skeleton-card {
     display: flex;
     align-items: center;
-    gap: 14px;
-    background: rgba(255,255,255,0.18);
-    border-radius: 18px;
-    margin-bottom: 10px;
-    padding: 16px 18px;
+    gap: 12px;
+    background: var(--card);
+    border-radius: 14px;
+    margin-bottom: 8px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
     overflow: hidden;
   }
 
   .skel {
     background: linear-gradient(
       90deg,
-      rgba(255,255,255,0.12) 25%,
-      rgba(255,255,255,0.28) 50%,
-      rgba(255,255,255,0.12) 75%
+      #f0f0f5 25%, #e4e4ee 50%, #f0f0f5 75%
     );
     background-size: 200% 100%;
     animation: shimmer 1.4s infinite;
@@ -347,20 +443,21 @@
     flex-shrink: 0;
   }
 
-  .skel-badge { width: 62px; height: 32px; border-radius: 10px; }
+  .skel-badge { width: 58px; height: 28px; border-radius: 8px; }
   .skel-lines { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-  .skel-line { height: 13px; border-radius: 6px; }
-  .skel-arrow { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+  .skel-line { height: 12px; border-radius: 6px; }
+  .skel-arrow { width: 16px; height: 16px; border-radius: 50%; }
 
   @keyframes shimmer {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
 
+  /* ── LOCK OVERLAY ────────────────────────────────── */
   .lock-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 5, 30, 0.96);
+    background: rgba(10,10,20,0.85);
     z-index: 2000;
     display: none;
     align-items: center;
@@ -373,14 +470,14 @@
   .lock-overlay.active { display: flex; }
 
   .lock-card {
-    background: #fff;
+    background: var(--white);
     width: 100%;
-    max-width: 340px;
-    border-radius: 32px;
+    max-width: 320px;
+    border-radius: 24px;
     padding: 28px 22px;
     text-align: center;
-    box-shadow: 0 30px 50px rgba(0,0,0,0.5);
-    animation: modalPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+    animation: modalPop 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
   }
 
   @keyframes modalPop {
@@ -389,28 +486,27 @@
   }
 
   .lock-icon-wrap {
-    width: 60px;
-    height: 60px;
-    background: #eef8fe;
+    width: 56px; height: 56px;
+    background: rgba(47,56,178,0.08);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 12px;
-    color: #29a8e8;
+    color: var(--blue);
   }
 
   .lock-card h3 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
-    color: #111;
+    color: var(--dark);
     margin-bottom: 6px;
   }
 
   .lock-card p {
-    font-size: 12.5px;
-    color: #555;
-    line-height: 1.4;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
     margin-bottom: 18px;
     font-weight: 500;
   }
@@ -419,28 +515,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    background: #2ea6da;
-    color: #fff;
+    gap: 8px;
+    background: var(--blue);
+    color: var(--white);
     text-decoration: none;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     padding: 12px;
     border-radius: 40px;
-    box-shadow: 0 4px 12px rgba(41,168,232,0.3);
-    margin-bottom: 12px;
+    box-shadow: 0 4px 16px rgba(47,56,178,0.3);
+    margin-bottom: 10px;
     transition: background 0.2s;
   }
-  .lock-btn-join:hover { background: #128ec9; }
+  .lock-btn-join:hover { background: #1e2590; }
 
   .lock-btn-direct {
     width: 100%;
-    background: #1a1a2e;
+    background: var(--dark);
     color: white;
     border: none;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     padding: 12px;
     border-radius: 40px;
     cursor: pointer;
@@ -449,65 +545,72 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  .lock-btn-direct:hover { background: #2a2a44; transform: scale(0.98); }
-  .lock-btn-direct:active { transform: scale(0.97); }
-  .lock-btn-direct:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+  .lock-btn-direct:hover { background: var(--black); transform: scale(0.98); }
+  .lock-btn-direct:disabled { background: #ccc; cursor: not-allowed; transform: none; }
 
+  /* ── TOAST ───────────────────────────────────────── */
   .instant-toast {
     position: fixed;
     bottom: 28px;
     left: 50%;
     transform: translateX(-50%);
-    background: #1e2a32e6;
-    backdrop-filter: blur(12px);
+    background: var(--dark);
     color: white;
     padding: 8px 20px;
     border-radius: 60px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     z-index: 2200;
     pointer-events: none;
     animation: fadeUp 0.2s ease-out;
     white-space: nowrap;
-    font-family: monospace;
+    font-family: 'Poppins', sans-serif;
+    border-left: 3px solid var(--yellow);
   }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <div class="hero">
-    <div class="hero-title">Sphotoedit KIT</div>
-    <div class="hero-sub">Find Tools. Get Instant Links.</div>
-    
-    <!-- DUAL BANNER: Telegram left, YouTube right -->
-    <div class="dual-banner">
-      <a class="banner-half tg" href="https://t.me/+qkeG942fmqhkMmM1" target="_blank" rel="noopener noreferrer">
-        <div class="banner-icon tg">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.47-.52-.17L7.64 13.5 3.53 12.2c-.9-.28-.92-.9.19-1.33L19.8 4.58c.74-.28 1.38.16 1.14 1.18l-2.74 12.91c-.2 1-.8 1.25-1.63.78l-4.17-3.07-2.01 1.94c-.22.22-.41.41-.85.41z"/>
-          </svg>
-        </div>
-        <div class="banner-label tg">Join Telegram<br>Free Assets</div>
-        <div class="banner-badge tg">FOLLOW</div>
-      </a>
 
-      <a class="banner-half yt" href="https://www.youtube.com/@Sphotoedit" target="_blank" rel="noopener noreferrer">
-        <div class="banner-icon yt">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-        </div>
-        <div class="banner-label yt">Watch on<br>YouTube</div>
-        <div class="banner-badge yt">SUBSCRIBE</div>
-      </a>
+  <!-- HERO COVER -->
+  <a class="hero-cover" href="https://wa.me/7021498836?text=Hey%2C%20I%20want%20to%20learn%20Photoshop." target="_blank" rel="noopener noreferrer">
+    <div class="accent-bar"></div>
+    <img class="hero-avatar"
+         src="https://i.ibb.co/27T1gSFG/Sandeep-Darji-2.png"
+         alt="Sandeep Darji"
+         onerror="this.style.display='none'">
+    <div class="hero-text">
+      <span class="hero-eyebrow">Sandeep Darji</span>
+      <div class="hero-headline">Want to Learn<br>Photoshop?</div>
+      <div class="hero-cta">
+        <svg class="hero-cta-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        WhatsApp Me Directly
+      </div>
     </div>
+  </a>
 
+  <!-- COLLAB STRIP -->
+  <a class="collab-strip" href="mailto:Sphotoedit@gmail.com">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <path d="M2 7l10 7 10-7"/>
+    </svg>
+    <span>For Collaboration — <strong>Sphotoedit@gmail.com</strong></span>
+    <svg class="collab-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </a>
+
+  <!-- SEARCH ZONE -->
+  <div class="search-zone">
+    <div class="brand-label">Sphotoedit KIT</div>
     <div class="search-wrap">
       <span class="search-icon">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
         </svg>
       </span>
@@ -525,23 +628,21 @@
     <div id="entriesList"></div>
   </div>
 
-  <div class="credits-footer">
-    Powered by Sphotoedit.
-  </div>
+  <div class="credits-footer">Powered by Sphotoedit</div>
 </div>
 
+<!-- LOCK OVERLAY -->
 <div class="lock-overlay" id="lockOverlay">
   <div class="lock-card">
     <div class="lock-icon-wrap">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
         <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.47-.52-.17L7.64 13.5 3.53 12.2c-.9-.28-.92-.9.19-1.33L19.8 4.58c.74-.28 1.38.16 1.14 1.18l-2.74 12.91c-.2 1-.8 1.25-1.63.78l-4.17-3.07-2.01 1.94c-.22.22-.41.41-.85.41z"/>
       </svg>
     </div>
     <h3>Link Locked</h3>
     <p>Join Telegram → tap <strong>Direct Link</strong> to unlock instantly.</p>
-    
     <a class="lock-btn-join" id="modalJoinBtn" href="https://t.me/+qkeG942fmqhkMmM1" target="_blank" rel="noopener noreferrer">
-      Join Channel
+      Join Telegram Channel
     </a>
     <button class="lock-btn-direct" id="modalDirectBtn">
       🔓 Direct Link
@@ -551,10 +652,8 @@
 
 <script>
   const API_URL = 'https://script.google.com/macros/s/AKfycbz7XuDQPEw5c__5noSJPCcON0fqAwyO03nJKzCxoPaVXGhSJKwIaUts2eO_NuIB1c9sWw/exec';
-  const BADGE_COLORS = [
-    '#7c4dca', '#c0478a', '#e0572a', '#2196a8',
-    '#4caf7d', '#e08020', '#5c6bc0', '#c0522a'
-  ];
+
+  const BADGE_COLORS = ['#2F38B2'];
 
   let allEntries = [];
   let query = '';
@@ -569,12 +668,12 @@
 
   function showToast(msg, duration = 1800) {
     let existing = document.querySelector('.instant-toast');
-    if(existing) existing.remove();
+    if (existing) existing.remove();
     const toast = document.createElement('div');
     toast.className = 'instant-toast';
     toast.innerText = msg;
     document.body.appendChild(toast);
-    setTimeout(() => { if(toast && toast.remove) toast.remove(); }, duration);
+    setTimeout(() => { if (toast && toast.remove) toast.remove(); }, duration);
   }
 
   function checkUrlParameters() {
@@ -621,10 +720,10 @@
     lockOverlay.classList.remove('active');
     if (pendingTargetUrl && pendingTargetUrl !== '#') {
       window.open(pendingTargetUrl, '_blank', 'noopener,noreferrer');
-      showToast(`✅ Direct Link opened → ${pendingTargetUrl.substring(0, 50)}`, 2000);
+      showToast(`✅ Opened → ${pendingTargetUrl.substring(0, 50)}`, 2000);
       pendingTargetUrl = '';
     } else {
-      showToast(`✓ Unlocked! Click any tool to open directly.`, 1500);
+      showToast(`✓ Unlocked! Click any tool to open.`, 1500);
     }
     modalDirectBtn.disabled = false;
     modalDirectBtn.innerHTML = "🔓 Direct Link";
@@ -633,7 +732,7 @@
   modalDirectBtn.addEventListener('click', onDirectUnlock);
 
   lockOverlay.addEventListener('click', (e) => {
-    if(e.target === lockOverlay) {
+    if (e.target === lockOverlay) {
       lockOverlay.classList.remove('active');
       pendingTargetUrl = '';
     }
@@ -646,7 +745,7 @@
       const text = await res.text();
       let json;
       try { json = JSON.parse(text); }
-      catch(e) { renderState('error', 'Bad response: ' + text.slice(0,160)); return; }
+      catch(e) { renderState('error', 'Bad response: ' + text.slice(0, 160)); return; }
       if (json.error) { renderState('error', json.error); return; }
       allEntries = (json.entries || []).reverse();
       if (allEntries.length === 0) { renderState('empty'); return; }
@@ -659,8 +758,9 @@
   }
 
   function esc(s) {
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
+
   function hi(text, q) {
     if (!q || !text) return esc(text);
     const e  = esc(text);
@@ -701,7 +801,7 @@
           <span class="entry-code" style="background:${color}">${hi(e.code || '—', q)}</span>
           <span class="entry-title">${hi(e.title || 'Untitled', q)}</span>
           <span class="entry-arrow">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </span>
@@ -728,7 +828,7 @@
     } else if (type === 'error') {
       entriesList.innerHTML = `<div class="state-box">
         <div class="state-icon">⚠️</div>
-        <div class="state-label">${esc(msg||'Something went wrong')}</div>
+        <div class="state-label">${esc(msg || 'Something went wrong')}</div>
         <button class="retry-btn" onclick="fetchData()">Retry</button>
       </div>`;
     } else if (type === 'empty') {
@@ -741,7 +841,7 @@
 
   window.handleCardClick = handleCardClick;
   window.fetchData = fetchData;
-  
+
   fetchData();
 </script>
 </body>
